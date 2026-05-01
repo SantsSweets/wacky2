@@ -8,7 +8,7 @@ from PyQt6.QtMultimedia import QAudioOutput
 from PyQt6.QtWidgets import QVBoxLayout
 
 class WackyWatch(QMainWindow, Ui_Widget):
-    def __init__(self):
+    def __init__(self) -> None:
         """sets up the main window ui and the start-up sounds, it gets the Qsoundeffect function and
         then connects the source of the audio, sets the volume, then plays the sound effect when the application is started."""
         super().__init__()
@@ -60,7 +60,7 @@ class WackyWatch(QMainWindow, Ui_Widget):
         self.Vid.mediaStatusChanged.connect(self.handlemediastatus)
         self.Clearance = False
 
-    def namecheck(self):
+    def namecheck(self) -> str:
         """checks if line edit is empty or not itll then go into into two different
         functions depending on what button you press it also checks if the name is left as blank
         if it is, then it returns none otherwise it returns the users name
@@ -68,9 +68,9 @@ class WackyWatch(QMainWindow, Ui_Widget):
         name = self.YOURNAME.text().strip()
         if name == '':
             self.Question.setText("Enter A REAL NAME!")
-            return None
+            return ''
         return name
-    def acceptname(self):
+    def acceptname(self) -> None:
         """this is the yes button and if the name is left blank then it doesnt continue until the
         name is filled in
         it then deletes the line edit if the name is accepted and it gets rid of the
@@ -90,7 +90,7 @@ class WackyWatch(QMainWindow, Ui_Widget):
             self.videoselect()
         else:
             pass
-    def rejectname(self):
+    def rejectname(self) -> None:
         """if the no button is selected, then a sound effect is played, it sets the text to
         asking the user to enter their
         name again, then it clears the textbox, and then
@@ -101,9 +101,10 @@ class WackyWatch(QMainWindow, Ui_Widget):
         self.Sad_sound.play()
         self.Question.setText("Enter your name again:")
         self.YOURNAME.clear()
-        self.__init__()
+        self.Yes.setDisabled(True)
+        self.N.setDisabled(True)
 
-    def videoselect(self):
+    def videoselect(self) -> None:
         """this video select function that runs when the name is accepted enables and show the buttons to be pressed."""
         self.Vid1.setEnabled(True)
         self.Vid2.setEnabled(True)
@@ -112,7 +113,7 @@ class WackyWatch(QMainWindow, Ui_Widget):
         self.Vid2.show()
         self.Vid3.show()
 
-    def video1(self):
+    def video1(self) -> None:
         """these video playing functions set up the video output
         source which is the vidw variable that
         is connected to our VideoContainer widget that we had made in
@@ -135,7 +136,7 @@ class WackyWatch(QMainWindow, Ui_Widget):
         self.VideoContainer.raise_()
         self.Vid.play()
 
-    def video2(self):
+    def video2(self) -> None:
         """this function does the same as the video 1 function, it just changes the source video to be something else"""
         self.Vid.setVideoOutput(self.VidW)
         self.Vid.setSource(QUrl.fromLocalFile('ENA.mp4'))
@@ -149,7 +150,7 @@ class WackyWatch(QMainWindow, Ui_Widget):
         self.VideoContainer.raise_()
         self.Vid.play()
 
-    def video3(self):
+    def video3(self) -> None:
         """this function does the same as the video 1 function just with a different video"""
         self.Vid.setVideoOutput(self.VidW)
         self.Vid.setSource(QUrl.fromLocalFile('TRU.mp4'))
@@ -162,16 +163,15 @@ class WackyWatch(QMainWindow, Ui_Widget):
         self.VideoContainer.show()
         self.VideoContainer.raise_()
         self.Vid.play()
-        pass
 
-    def handlemediastatus(self, status):
+    def handlemediastatus(self, status: QMediaPlayer.MediaStatus) -> None:
         """this function checks if the status of the Qmedia player has reached the end of the video
         and when the video ends. it goes to the backtovideomenu function where it brings up the video
         choices."""
         if status == QMediaPlayer.MediaStatus.EndOfMedia:
             self.backtovideomenu()
 
-    def backtovideomenu(self):
+    def backtovideomenu(self) -> None:
         """since i didnt remove the buttons or disable them since the widget ontop prevents the user from interacting
         with it, i just stop the video. then i hide the video container widget and lower it so that the user can
         select the next video"""
@@ -180,7 +180,7 @@ class WackyWatch(QMainWindow, Ui_Widget):
         self.VideoContainer.lower()
 
 
-    def submit(self):
+    def submit(self) -> None:
         """this submit function just enables the yes or no buttons that dont work unless the submit button is pressed
         first, it then plays a sound effect when pressed and then does a name check, if the name check returns a none,
          then it asks the user for their name and if not then it asks the user to confirm if this is their real name.
@@ -192,7 +192,7 @@ class WackyWatch(QMainWindow, Ui_Widget):
         self.Click_sound.setVolume(0.6)
         self.Click_sound.play()
         name = self.namecheck()
-        if name is None:
+        if name == '':
             self.Question.setText("Enter your NAME!!!")
             return
         self.Question.setText("Is this your real name?")
