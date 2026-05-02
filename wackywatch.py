@@ -185,8 +185,6 @@ class WackyWatch(QMainWindow, Ui_Widget):
         first, it then plays a sound effect when pressed and then does a name check, if the name check returns a none,
          then it asks the user for their name and if not then it asks the user to confirm if this is their real name.
          thats where the yes and no buttons come into place."""
-        self.Yes.setDisabled(False)
-        self.N.setDisabled(False)
         self.Click_sound = QSoundEffect()
         self.Click_sound.setSource(QUrl.fromLocalFile('CLICK.wav'))
         self.Click_sound.setVolume(0.6)
@@ -195,6 +193,8 @@ class WackyWatch(QMainWindow, Ui_Widget):
         if name == '':
             self.Question.setText("Enter your NAME!!!")
             return
+        self.Yes.setDisabled(False)
+        self.N.setDisabled(False)
         self.Question.setText("Is this your real name?")
 
 
